@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 from jose import jwt
 
 AUTH0_DOMAIN = 'dev-cv4x5nh5.auth0.com'
-API_AUDIENCE = 'dev-cv4x5nh5'
+API_AUDIENCE = 'robingood_api'
 ALGORITHMS = ["RS256"]
 
 
