@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from flask_cors import cross_origin
 from ..auth import *
+from . import rd
 
 bp = Blueprint('home', __name__, url_prefix='/')
 
@@ -15,4 +16,4 @@ bp = Blueprint('home', __name__, url_prefix='/')
 
 @bp.route('')
 def home():
-    return redis_client.get('potato')
+    return rd.get('bahamas')
