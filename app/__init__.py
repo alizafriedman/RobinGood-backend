@@ -7,19 +7,21 @@ from .routes import home, rd
 from jose import jwt
 from .auth import *
 from .config import Config
+from .model import db, User
 
 
 
 app = Flask(__name__)
 app.config.from_object(Config)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
-
+db.init_app(app)
+Migrate(app, db)
 
 app.register_blueprint(home.bp)
 
 
-
 rd.init_app(app)
+
 
 # Error handler
 
