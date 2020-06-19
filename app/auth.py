@@ -6,8 +6,8 @@ from flask_cors import cross_origin
 from flask_migrate import Migrate
 from jose import jwt
 
-AUTH0_DOMAIN = 'dev-cv4x5nh5.auth0.com'
-API_AUDIENCE = 'robingood_api'
+AUTH0_DOMAIN = 'dev-cv4x5nh5.us.auth0.com'
+API_AUDIENCE = 'https://robingood_api.com'
 ALGORITHMS = ["RS256"]
 
 

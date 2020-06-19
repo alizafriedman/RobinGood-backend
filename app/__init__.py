@@ -3,7 +3,7 @@ from six.moves.urllib.request import urlopen
 from functools import wraps
 from flask import Flask, request, jsonify, _request_ctx_stack
 from flask_cors import cross_origin, CORS
-from .routes import home, rd
+from .routes import home, rd, user, charity
 from jose import jwt
 from .auth import *
 from .config import Config
@@ -18,6 +18,8 @@ db.init_app(app)
 Migrate(app, db)
 
 app.register_blueprint(home.bp)
+app.register_blueprint(user.bp)
+app.register_blueprint(charity.bp)
 
 
 rd.init_app(app)
