@@ -32,11 +32,13 @@ def charities():
         info = charityInfo['data']
         ein_number = info['ein']
         name = info['name']
-        city = info ['city']
+        city = info['city']
         states = info['state']
-        test = 'charity'
-        add = rd.set(test, states)
-        print(add)
+        dictionary = {'name':name, }
+        add = rd.getset('city', city)
+        print(city)
+        test = rd.get(str(add))
+        
         return str(add)
         
     
