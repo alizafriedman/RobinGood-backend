@@ -16,7 +16,8 @@ def handle_auth_error(ex):
     response.status_code = ex.status_code
     return response
 
-
+#checks if ein exists in redis, adds to redis if not
+#need a way to link all the info by ein to user in postgres
 @bp.route('')
 def charities():
     body = request.json
@@ -57,9 +58,43 @@ def charities():
         rd.set(charity_id, data)
         result = rd.get(charity_id)
         res = json.loads(result)
-        db.session.add(str(charity_id))
-        db.session.commit()
-        print(res)
         return res
     
+#patch = add charity to user
+@bp.route('', methods=['PUT'])
+@cross_origin(headers=["Content-Type", "Authorization"])
+# @requires_auth
+def add_charity():
+    token = request.headers.get('Authorization')
+    req = requests.get('https://dev-cv4x5nh5.us.auth0.com/userinfo',
+                       headers={'Authorization': token}).content
+    userInfo = json.loads(req)
+    print(userInfo)
+    user = User.query.filter_by(email=userInfo['email']).first()
+    data = request.json
+    user.charity = data['charity_id']
+    db.session.commit()
+    return 'apple'
     
+
+
+
+
+
+
+
+
+
+
+#for front end search
+@bp.route('/search/')
+@cross_origin(headers=["Content-Type", "Authorization"])
+def search():
+    token = request.headers.get('Authorization')
+    search_term = request.args.get('search_term')
+    req = requests.get(f'http://data.orghunter.com/v1/charitysearch?user_key=3527271551210ee6dbcb09d5e20c8a41&searchTerm={search_term}',
+                       headers={'Authorization': token}).content
+    charityInfo = json.loads(req)
+    info = charityInfo['data']
+    print(info)
+    return 'apple'
