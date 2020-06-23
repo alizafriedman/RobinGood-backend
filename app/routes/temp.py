@@ -30,27 +30,20 @@ def charities():
         token = request.headers.get('Authorization')
         req = requests.get(f'http://data.orghunter.com/v1/charityfinancial?user_key=3527271551210ee6dbcb09d5e20c8a41&ein={charity_id}',
                             headers={'Authorization': token}).content
-        requ = requests.get(
-            f'http://data.orghunter.com/v1/charitysearch?user_key=3527271551210ee6dbcb09d5e20c8a41&sein={charity_id}',
-            headers={'Authorization': token}).content
         charityInfo = json.loads(req)
-        charityInfos = json.loads(requ)
-        print(charityInfos)
+        print(charityInfo)
         info = charityInfo['data']
-        info_w = charityInfos['data'][0]
-        print(info_w)
+        # print(info)
         charity_id = info['ein']
         name = info['name']
         city = info['city']
         state = info['state']
         zipCode = info['zipCode']
         category = info['nteeClass']
-        revenue = info['totrevenue'] or 0
-        functionalExpenses = info['totfuncexpns'] or 0
-        fundraising = info['grsincfndrsng'] or 0
-        contributions = info['totcntrbgfts'] or 0
-        url = info_w['url']
-        donate = info_w['donationUrl']
+        revenue = info['totrevenue']
+        functionalExpenses = info['totfuncexpns']
+        fundraising = info['grsincfndrsng']
+        contributions = info['totcntrbgfts']
 
         dictionary = {
         'name': name,
@@ -61,9 +54,7 @@ def charities():
         'total revenue': int(revenue),
         'total functional expenses': int(functionalExpenses),
         'gross fundraising': int(fundraising),
-        'total contributions': int(contributions),
-        'website': url,
-        'donate link': donate
+        'total contributions': int(contributions)
         }
 
         data = json.dumps(dictionary)
@@ -93,21 +84,17 @@ def add_charity():
 
 #delete a charity from the portfolio
 
-@bp.route('', methods=['DELETE'])
+@bp.route('/<int:user_id>', methods=['DELETE'])
 @cross_origin(headers=["Content-Type", "Authorization"])
 @requires_auth
 def delete_charity():
-    token = request.headers.get('Authorization')
+     token = request.headers.get('Authorization')
     req = requests.get('https://dev-cv4x5nh5.us.auth0.com/userinfo',
                        headers={'Authorization': token}).content
     userInfo = json.loads(req)
     user = User.query.filter_by(email=userInfo['email']).first()
     data = request.json
-    updated_list = [x for x in user.charity]
-    updated_list.remove(data['charity_id'])
-    user.charity = updated_list
-    db.session.commit()
-    return 'delete was successful', 201
+
 
 
 
@@ -125,4 +112,10 @@ def search():
     return 'apple'
 
 
-
+userInfo = json.loads(req)
+    user = User.query.filter_by(email=userInfo['email']).first()
+    data = request.json
+    new_list = [x for x in user.charity]
+    new_list.append(data['charity_id'])
+    user.charity = new_list
+    db.session.commit()
