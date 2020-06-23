@@ -58,3 +58,40 @@ def get_user(user_id):
         return person.to_dict(), 201
     else:
         return "person not found", 422
+
+
+#patch = add multiple charities to user - no post needed bec default value null?
+
+@bp.route('/<int:user_id>', methods=['PATCH'])
+@cross_origin(headers=["Content-Type", "Authorization"])
+@requires_auth
+def add_charity():
+    token = request.headers.get('Authorization')
+    req = requests.get('https://dev-cv4x5nh5.us.auth0.com/userinfo',
+                       headers={'Authorization': token}).content
+    userInfo = json.loads(req)
+    user = User.query.filter_by(email=userInfo['email']).first()
+    data = request.json
+    new_list = [*user.charity, data['charity_id']]
+    user.charity = new_list
+    db.session.commit()
+    return 'charity successfully added to your portfolio', 201
+
+
+#delete a charity from the portfolio
+
+@bp.route('/<int:user_id>', methods=['DELETE'])
+@cross_origin(headers=["Content-Type", "Authorization"])
+@requires_auth
+def delete_charity():
+    token = request.headers.get('Authorization')
+    req = requests.get('https://dev-cv4x5nh5.us.auth0.com/userinfo',
+                       headers={'Authorization': token}).content
+    userInfo = json.loads(req)
+    user = User.query.filter_by(email=userInfo['email']).first()
+    data = request.json
+    updated_list = [x for x in user.charity]
+    updated_list.remove(data['charity_id'])
+    user.charity = updated_list
+    db.session.commit()
+    return 'delete was successful', 201
