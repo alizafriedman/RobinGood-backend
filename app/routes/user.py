@@ -42,7 +42,7 @@ def updateUser():
         return jsonify({'userId': db_user.id}), 201
     else:  # no user exists create a new user
         new_user = User(email=body['email'],
-                        nickname=body['nickname']
+                        nickname=body['email']
                         )
         db.session.add(new_user)
         db.session.commit()
@@ -60,12 +60,31 @@ def get_user(user_id):
         return "person not found", 422
 
 
+#post
+
+@bp.route('/<int:user_id>', methods=['POST'])
+@cross_origin(headers=["Content-Type", "Authorization"])
+@requires_auth
+def add_single(user_id):
+    token = request.headers.get('Authorization')
+    req = requests.get('https://dev-cv4x5nh5.us.auth0.com/userinfo',
+                       headers={'Authorization': token}).content
+    userInfo = json.loads(req)
+    user = User.query.filter_by(email=userInfo['email']).first()
+    data = request.json
+    new_list = [data['charity_id']]
+    user.charity = new_list
+    db.session.commit()
+    return 'charity successfully added to your portfolio', 201
+
+
+
 #patch = add multiple charities to user - no post needed bec default value null?
 
 @bp.route('/<int:user_id>', methods=['PATCH'])
 @cross_origin(headers=["Content-Type", "Authorization"])
 @requires_auth
-def add_charity():
+def add_charity(user_id):
     token = request.headers.get('Authorization')
     req = requests.get('https://dev-cv4x5nh5.us.auth0.com/userinfo',
                        headers={'Authorization': token}).content

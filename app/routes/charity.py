@@ -38,14 +38,6 @@ def single():
     return charity
     
     
-
-
-
-
-
-
-
-
 #for front end search
 @bp.route('/search/')
 @cross_origin(headers=["Content-Type", "Authorization"])
