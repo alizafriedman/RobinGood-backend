@@ -30,6 +30,7 @@ def get_charity_by_id(charity_id):
             donate = info_w['donationUrl']
 
             charity_data = {
+                'ein': charity_id,
             'name': name,
             'city': city,
             'state': state,
