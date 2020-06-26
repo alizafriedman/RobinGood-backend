@@ -25,8 +25,9 @@ def handle_auth_error(ex):
 def charities(charity_id):
     # body = request.json
     # charity_id = body['charity_id']
-    charity = get_charity_by_id(charity_id)
+    charity = json.loads(get_charity_by_id(charity_id).decode('utf-8'))[0]
     # charity = json.dumps(charity)
+    print(charity)
     return charity
 
 #fetch one charity for main graph
@@ -41,25 +42,27 @@ def single():
 @bp.route('/mini')
 @cross_origin(headers=["Content-Type", "Authorization"])
 def mini():
-    charity1 = get_charity_by_id(112940331).decode('utf-8')
-    charity2 = get_charity_by_id(112940331).decode('utf-8')
-    charity3 = get_charity_by_id(112940331).decode('utf-8')
-    charity4 = get_charity_by_id(112940331).decode('utf-8')
+    charity1 = json.loads(get_charity_by_id(112940331).decode('utf-8'))
+    charity2 = json.loads(get_charity_by_id(112940331).decode('utf-8'))
+    charity3 = json.loads(get_charity_by_id(112940331).decode('utf-8'))
+    charity4 = json.loads(get_charity_by_id(112940331).decode('utf-8'))
     charities = [charity1, charity2, charity3, charity4]
-    print(charities)
+    
     return {'charities': charities}
+
+
     
 #for front end search
 @bp.route('/search')
 @cross_origin(headers=["Content-Type", "Authorization"])
 def search():
     token = request.headers.get('Authorization')
-    search_term = request.args.get('terms')
+    search_term = request.args.get('term')
     req = requests.get(f'http://data.orghunter.com/v1/charitysearch?user_key=3527271551210ee6dbcb09d5e20c8a41&searchTerm={search_term}',
                        headers={'Authorization': token}).content
-    charityInfo = json.loads(req)
+    charityInfo = json.loads(req.decode('utf-8'))
     info = charityInfo['data']
     charity_id = info[0]['ein']
     charity = get_charity_by_id(charity_id)
-    # print(charity)
+    print(charity)
     return charity

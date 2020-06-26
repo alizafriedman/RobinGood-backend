@@ -54,4 +54,7 @@ def get_charity_by_id(charity_id):
 
             charity_string = json.dumps(charity_data)
             rd.set(charity_id, charity_string)
-            return charity_data
+            test = rd.get(charity_id)
+            print(test)
+
+            return test
