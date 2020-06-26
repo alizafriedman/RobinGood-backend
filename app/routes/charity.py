@@ -21,6 +21,7 @@ def handle_auth_error(ex):
 
 
 @bp.route('/<int:charity_id>')
+@cross_origin(headers=["Content-Type", "Authorization"])
 def charities(charity_id):
     # body = request.json
     # charity_id = body['charity_id']
@@ -36,20 +37,29 @@ def charities(charity_id):
 def single():
     charity = get_charity_by_id(112940331)
     return charity
-    
+
+@bp.route('/mini')
+@cross_origin(headers=["Content-Type", "Authorization"])
+def mini():
+    charity1 = get_charity_by_id(112940331).decode('utf-8')
+    charity2 = get_charity_by_id(112940331).decode('utf-8')
+    charity3 = get_charity_by_id(112940331).decode('utf-8')
+    charity4 = get_charity_by_id(112940331).decode('utf-8')
+    charities = [charity1, charity2, charity3, charity4]
+    print(charities)
+    return {'charities': charities}
     
 #for front end search
-@bp.route('/search/')
+@bp.route('/search')
 @cross_origin(headers=["Content-Type", "Authorization"])
 def search():
     token = request.headers.get('Authorization')
-    search_term = request.args.get('search_term')
+    search_term = request.args.get('terms')
     req = requests.get(f'http://data.orghunter.com/v1/charitysearch?user_key=3527271551210ee6dbcb09d5e20c8a41&searchTerm={search_term}',
                        headers={'Authorization': token}).content
     charityInfo = json.loads(req)
     info = charityInfo['data']
-    print(info)
-    return 'apple'
-
-
-
+    charity_id = info[0]['ein']
+    charity = get_charity_by_id(charity_id)
+    # print(charity)
+    return charity

@@ -26,11 +26,12 @@ def get_charity_by_id(charity_id):
             functionalExpenses = info['totfuncexpns'] or 0
             fundraising = info['grsincfndrsng'] or 0
             contributions = info['totcntrbgfts'] or 0
-            url = info_w['url']
+            url = info_w['url'] or info_w['website']
+            # website = info_w['website']
             donate = info_w['donationUrl']
 
             charity_data = {
-                'ein': charity_id,
+            'ein': charity_id,
             'name': name,
             'city': city,
             'state': state,
@@ -49,7 +50,7 @@ def get_charity_by_id(charity_id):
             'total_contributions': int(contributions),
             'website': url,
             'donate_link': donate
-            }
+            },
 
             charity_string = json.dumps(charity_data)
             rd.set(charity_id, charity_string)
