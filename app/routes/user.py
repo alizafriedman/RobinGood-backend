@@ -91,6 +91,7 @@ def add_charity(user_id):
     userInfo = json.loads(req)
     user = User.query.filter_by(email=userInfo['email']).first()
     data = request.json
+    print(data)
     new_list = [*user.charity, data['charity_id']]
     user.charity = new_list
     db.session.commit()
