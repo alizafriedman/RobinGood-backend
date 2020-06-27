@@ -16,5 +16,5 @@ class User(db.Model):
             'id': self.id,
             'email': self.email,
             'nickname': self.nickname,
-            'charity': [c.to_dict() for c in self.charity]
+            'charity': self.charity
         }

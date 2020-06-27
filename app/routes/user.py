@@ -3,6 +3,7 @@ from flask_cors import cross_origin
 from ..auth import *
 from app.model import db, User
 import requests
+from . import rd
 
 bp = Blueprint("users", __name__, url_prefix='/users')
 
@@ -78,8 +79,43 @@ def add_single(user_id):
     return 'charity successfully added to your portfolio', 201
 
 
+@bp.route('/sets')
+@cross_origin(headers=["Content-Type", "Authorization"])
+@requires_auth
+def find(user_id):
+    token = request.headers.get('Authorization')
+    req = requests.get('https://dev-cv4x5nh5.us.auth0.com/userinfo',
+                       headers={'Authorization': token}).content
+    userInfo = json.loads(req)
+    user = User.query.filter_by(email=userInfo['email']).first().id
+    data = request.json
+    new_list = [data['charity_id']]
+    user.charity = new_list
+    return user.charity
+
+
+
+
+
+# @bp.route('/sets')
+# @cross_origin(headers=["Content-Type", "Authorization"])
+# @requires_auth
+# def get_sets():
+#     # gets decodes userinfo out of token using auth0 api
+#     token = request.headers.get('Authorization')
+#     req = requests.get('https://codelet-app.auth0.com/userinfo',
+#                        headers={'Authorization': token}).content
+#     userInfo = json.loads(req)
+#     userId = User.query.filter_by(email=userInfo['email']).first().id
+
+#     userInfo = User.query.options(db.joinedload(
+#         'sets').joinedload('votes'), db.joinedload('favorites')).get(userId)
+#     return userInfo.to_dict(), 200
+
 
 #patch = add multiple charities to user - no post needed bec default value null?
+
+
 
 @bp.route('/<int:user_id>', methods=['PATCH'])
 @cross_origin(headers=["Content-Type", "Authorization"])
