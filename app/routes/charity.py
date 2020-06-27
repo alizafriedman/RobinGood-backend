@@ -42,11 +42,10 @@ def single():
 @bp.route('/mini')
 @cross_origin(headers=["Content-Type", "Authorization"])
 def mini():
-    banana = 112940331
-    charity1 = json.loads(get_charity_by_id(banana).decode('utf-8'))
-    charity2 = json.loads(get_charity_by_id(banana).decode('utf-8'))
-    charity3 = json.loads(get_charity_by_id(banana).decode('utf-8'))
-    charity4 = json.loads(get_charity_by_id(banana).decode('utf-8'))
+    charity1 = json.loads(get_charity_by_id(113473757).decode('utf-8'))[0]
+    charity2 = json.loads(get_charity_by_id(112630071).decode('utf-8'))[0]
+    charity3 = json.loads(get_charity_by_id(113533002).decode('utf-8'))[0]
+    charity4 = json.loads(get_charity_by_id(113211164).decode('utf-8'))[0]
     print(charity1)
     charities = [charity1, charity2, charity3, charity4]
     

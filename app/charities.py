@@ -26,7 +26,7 @@ def get_charity_by_id(charity_id):
             functionalExpenses = info['totfuncexpns'] or 0
             fundraising = info['grsincfndrsng'] or 0
             contributions = info['totcntrbgfts'] or 0
-            url = info_w['url'] or info_w['website']
+            url = info_w['website'] or info_w['url']
             # website = info_w['website']
             donate = info_w['donationUrl']
 
