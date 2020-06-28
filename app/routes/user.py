@@ -32,10 +32,9 @@ def privateUser():
 
 @bp.route('', methods=['POST'])
 @cross_origin(headers=["Content-Type", "Authorization"])
+@requires_auth
 def updateUser():
-
     body = request.json
-    print(body)
     # checks if there there is user in db
     db_user = User.query.filter_by(email=body['email']).first()
     if db_user:  # if user exists updates the user's name
@@ -43,12 +42,13 @@ def updateUser():
         return jsonify({'userId': db_user.id}), 201
     else:  # no user exists create a new user
         new_user = User(email=body['email'],
-                        nickname=body['email']
+                        nickname=body['nickname']
                         )
         db.session.add(new_user)
         db.session.commit()
 
-    return 'user created', 201
+        return 'user created', 201
+    
 
 
 @bp.route('/<int:user_id>')
@@ -79,7 +79,7 @@ def add_single(user_id):
     return 'charity successfully added to your portfolio', 201
 
 
-@bp.route('/sets')
+@bp.route('/<int:user_id>')
 @cross_origin(headers=["Content-Type", "Authorization"])
 @requires_auth
 def find(user_id):
@@ -139,15 +139,19 @@ def add_charity(user_id):
 @bp.route('/<int:user_id>', methods=['DELETE'])
 @cross_origin(headers=["Content-Type", "Authorization"])
 @requires_auth
-def delete_charity():
+def delete_charity(user_id):
     token = request.headers.get('Authorization')
     req = requests.get('https://dev-cv4x5nh5.us.auth0.com/userinfo',
                        headers={'Authorization': token}).content
     userInfo = json.loads(req)
     user = User.query.filter_by(email=userInfo['email']).first()
     data = request.json
+    # print(data)
     updated_list = [x for x in user.charity]
-    updated_list.remove(data['charity_id'])
-    user.charity = updated_list
-    db.session.commit()
+    print(user.charity)
+    # print(data['charity_id'])
+    # updated_list.remove(data['charity_id'])
+    # user.charity = updated_list
+    # print(user.charity)
+    # db.session.commit()
     return 'delete was successful', 201

@@ -17,8 +17,8 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 db.init_app(app)
 Migrate(app, db)
 
-app.register_blueprint(home.bp)
 app.register_blueprint(user.bp)
+app.register_blueprint(home.bp)
 app.register_blueprint(charity.bp)
 
 
