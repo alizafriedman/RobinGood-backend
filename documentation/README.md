@@ -5,7 +5,7 @@ Check us out here: [RobinGood](https://www.therobingood.com/)
 
 To log-in as a user, you can either use your existing github or gmail information via Auth0, or using the email email of demo@demo.com with the password demo123!
 
-Frontend for app here: [RobinGood Backend](https://github.com/alizafriedman/RobinGood-frontend)
+Frontend for app here: [RobinGood Frontend](https://github.com/alizafriedman/RobinGood-frontend)
 
 Backend for app here: [RobinGood Backend](https://github.com/alizafriedman/RobinGood-backend)
 
