@@ -23,11 +23,8 @@ def handle_auth_error(ex):
 @bp.route('/<int:charity_id>')
 @cross_origin(headers=["Content-Type", "Authorization"])
 def charities(charity_id):
-    # body = request.json
-    # charity_id = body['charity_id']
     charity = json.loads(get_charity_by_id(charity_id).decode('utf-8'))[0]
-    # charity = json.dumps(charity)
-    print(charity)
+
     return charity
 
 #fetch one charity for main graph
@@ -38,6 +35,10 @@ def charities(charity_id):
 def single():
     charity = get_charity_by_id(112940331)
     return charity
+
+
+#hardcoded four minis from redis
+
 
 @bp.route('/mini')
 @cross_origin(headers=["Content-Type", "Authorization"])
