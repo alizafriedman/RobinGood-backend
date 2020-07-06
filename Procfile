@@ -1,1 +1,1 @@
-web: pipenv run flask run
+web: python server.py
