@@ -30,6 +30,7 @@ Backend for app here: [RobinGood Backend](https://github.com/alizafriedman/Robin
 
 
 
+
 ## Technologies implented:
   - Javascript
   - Python3
