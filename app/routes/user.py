@@ -128,10 +128,16 @@ def add_charity(user_id):
     user = User.query.filter_by(email=userInfo['email']).first()
     data = request.json
     print(data)
-    new_list = [*user.charity, data['charity_id']]
-    user.charity = new_list
-    db.session.commit()
-    return 'charity successfully added to your portfolio', 201
+    if user.charity:
+        new_list = [*user.charity, data['charity_id']]
+        user.charity = new_list
+        db.session.commit()
+        return 'charity successfully added to your portfolio', 201
+    else:
+        new_list = [data['charity_id']]
+        user.charity = new_list
+        db.session.commit()
+        return 'charity successfully added to your portfolio', 201
 
 
 #delete a charity from the portfolio

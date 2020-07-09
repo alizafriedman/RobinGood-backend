@@ -6,6 +6,8 @@ from . import rd
 from app.model import db, User
 import requests
 from app.charities import get_charity_by_id
+from flask_restful import reqparse
+
 
 bp = Blueprint('charities', __name__, url_prefix='/charities')
 
@@ -26,6 +28,21 @@ def charities(charity_id):
     charity = json.loads(get_charity_by_id(charity_id).decode('utf-8'))[0]
 
     return charity
+
+#fetch saved charities from redis
+@bp.route('/bulk')
+@cross_origin(headers=["Content-Type", "Authorization"])
+def bulk_grab():
+    data = request.args.getlist('eins[]')
+    print(data)
+    banana = rd.mget(data)
+    print(banana)
+    empty = []
+    for x in banana:
+        b = slice(1, -1)
+        empty.append(json.loads(x.decode('utf-8')[b]))
+
+    return {'banana' : empty }
 
 #fetch one charity for main graph
 

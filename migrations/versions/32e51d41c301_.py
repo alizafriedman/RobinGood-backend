@@ -22,7 +22,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('email', sa.String(length=50), nullable=False),
     sa.Column('nickname', sa.String(length=50), nullable=False),
-    sa.Column('charity', postgresql.ARRAY(sa.String()), nullable=True),
+    sa.Column('charity', postgresql.ARRAY(sa.String()), server_default='{}'),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('charity'),
     sa.UniqueConstraint('email')

@@ -21,6 +21,7 @@ gunicorn = "*"
 flask-redis = "*"
 redis = "*"
 pylint = "*"
+flask-restful = "*"
 
 [requires]
 python_version = "3.8"
