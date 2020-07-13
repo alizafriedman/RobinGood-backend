@@ -38,11 +38,11 @@ def get_charity_by_id(charity_id):
             'zip_code': zipCode,
             'category': category,
             'chart_data':[
-                {'x':'T Revenue', 'y':int(revenue)},
-                {'x': 'T Functional Expenses',
+                {'x':'Total Revenue', 'y':int(revenue)},
+                {'x': 'Total Functional Expenses',
                     'y': int(functionalExpenses)},
-                {'x': 'G Fundraising', 'y': int(fundraising)},
-                {'x': 'T Contributions', 'y':int(contributions)}
+                {'x': 'Gross Fundraising', 'y': int(fundraising)},
+                {'x': 'Total Contributions', 'y':int(contributions)}
             ],
             'total_revenue': int(revenue),
             'total_functional_expenses': int(functionalExpenses),
