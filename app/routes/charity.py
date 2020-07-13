@@ -29,7 +29,9 @@ def charities(charity_id):
 
     return charity
 
-#fetch saved charities from redis
+#fetch user saved charities from redis
+
+
 @bp.route('/bulk')
 @cross_origin(headers=["Content-Type", "Authorization"])
 def bulk_grab():
@@ -41,7 +43,6 @@ def bulk_grab():
     for x in banana:
         b = slice(1, -1)
         empty.append(json.loads(x.decode('utf-8')[b]))
-
     return {'banana' : empty }
 
 #fetch one charity for main graph
@@ -63,9 +64,9 @@ def mini():
     charity1 = json.loads(get_charity_by_id(113473757).decode('utf-8'))[0]
     charity2 = json.loads(get_charity_by_id(112630071).decode('utf-8'))[0]
     charity3 = json.loads(get_charity_by_id(113533002).decode('utf-8'))[0]
-    charity4 = json.loads(get_charity_by_id(113211164).decode('utf-8'))[0]
+    # charity4 = json.loads(get_charity_by_id(113211164).decode('utf-8'))[0]
     print(charity1)
-    charities = [charity1, charity2, charity3, charity4]
+    charities = [charity1, charity2, charity3]
     
     
     return {'charities': charities}
