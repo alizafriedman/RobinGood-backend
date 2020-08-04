@@ -61,7 +61,7 @@ def get_user(user_id):
         return "person not found", 422
 
 
-#post
+#post - add charity
 
 @bp.route('/<int:user_id>', methods=['POST'])
 @cross_origin(headers=["Content-Type", "Authorization"])
@@ -129,6 +129,7 @@ def add_charity(user_id):
     data = request.json
     print(data)
     if user.charity:
+        print(user.charity)
         new_list = [*user.charity, data['charity_id']]
         user.charity = new_list
         db.session.commit()
@@ -153,11 +154,15 @@ def delete_charity(user_id):
     user = User.query.filter_by(email=userInfo['email']).first()
     data = request.json
     # print(data)
-    updated_list = [x for x in user.charity]
-    print(user.charity)
-    # print(data['charity_id'])
-    # updated_list.remove(data['charity_id'])
-    # user.charity = updated_list
-    # print(user.charity)
-    # db.session.commit()
+    updated_list = [*user.charity]
+    # print(updated_list)
+    char = data['charity_id']
+    # print(char)
+    for x in updated_list:
+        if int(x) == int(char):
+            updated_list.remove(str(x))
+            user.charity = updated_list
+            # print(user.charity)
+            db.session.commit()
+    print(updated_list)
     return 'delete was successful', 201

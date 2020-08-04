@@ -12,10 +12,10 @@ def get_charity_by_id(charity_id):
         if req.status_code == requests.codes.ok and requ.status_code == requests.codes.ok:
             charityInfo = req.json()
             charityInfos = requ.json()
-            print(charityInfos)
+            # print(charityInfos)
             info = charityInfo['data']
             info_w = charityInfos['data'][0]
-            print(info_w)
+            # print(info_w)
             charity_id = info['ein']
             name = info['name']
             city = info['city']
@@ -55,6 +55,6 @@ def get_charity_by_id(charity_id):
             charity_string = json.dumps(charity_data)
             rd.set(charity_id, charity_string)
             test = rd.get(charity_id)
-            print(test)
+            # print(test)
 
             return test

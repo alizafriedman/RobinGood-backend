@@ -36,9 +36,9 @@ def charities(charity_id):
 @cross_origin(headers=["Content-Type", "Authorization"])
 def bulk_grab():
     data = request.args.getlist('eins[]')
-    print(data)
+    # print(data)
     banana = rd.mget(data)
-    print(banana)
+    # print(banana)
     empty = []
     for x in banana:
         b = slice(1, -1)
@@ -65,7 +65,7 @@ def mini():
     charity2 = json.loads(get_charity_by_id(112630071).decode('utf-8'))[0]
     charity3 = json.loads(get_charity_by_id(113533002).decode('utf-8'))[0]
     # charity4 = json.loads(get_charity_by_id(113211164).decode('utf-8'))[0]
-    print(charity1)
+    # print(charity1)
     charities = [charity1, charity2, charity3]
     
     
@@ -85,5 +85,5 @@ def search():
     info = charityInfo['data']
     charity_id = info[0]['ein']
     charity = get_charity_by_id(charity_id)
-    print(charity)
+    # print(charity)
     return charity
