@@ -1,5 +1,5 @@
 # RobinGood
-A data driven presentation of domestic charities and their financial data 
+A data driven presentation of domestic charities and their financial data written in python with flask.
 
 Check us out here: [RobinGood](https://www.therobingood.com/)
 
@@ -11,10 +11,7 @@ Backend for app here: [RobinGood Backend](https://github.com/alizafriedman/Robin
 
 ## Documentation links
 - [Feature List](https://github.com/alizafriedman/RobinGood-backend/blob/master/documentation/features.md)
-- [Front End Routes**](need to do)
 - [Back End Routes](https://github.com/alizafriedman/RobinGood-backend/blob/master/documentation/backendRoutes.md)
-- [Schema**](need to do)
-- [Schema Image**](need to do)
 
 
 ## Screenshots
