@@ -63,7 +63,7 @@ def single():
 def mini():
     charity1 = json.loads(get_charity_by_id(113473757).decode('utf-8'))[0]
     charity2 = json.loads(get_charity_by_id(112630071).decode('utf-8'))[0]
-    charity3 = json.loads(get_charity_by_id(113533002).decode('utf-8'))[0]
+    charity3 = json.loads(get_charity_by_id(650755522).decode('utf-8'))[0]
     # charity4 = json.loads(get_charity_by_id(113211164).decode('utf-8'))[0]
     # print(charity1)
     charities = [charity1, charity2, charity3]

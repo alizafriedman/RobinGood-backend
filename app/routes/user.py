@@ -141,7 +141,7 @@ def add_charity(user_id):
         return 'charity successfully added to your portfolio', 201
 
 
-#delete a charity from the portfolio
+#delete a charity from saved
 
 @bp.route('/<int:user_id>', methods=['DELETE'])
 @cross_origin(headers=["Content-Type", "Authorization"])
@@ -164,5 +164,5 @@ def delete_charity(user_id):
             user.charity = updated_list
             # print(user.charity)
             db.session.commit()
-    print(updated_list)
+    # print(updated_list)
     return 'delete was successful', 201
