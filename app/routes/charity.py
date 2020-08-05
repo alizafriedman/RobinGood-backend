@@ -37,13 +37,13 @@ def charities(charity_id):
 def bulk_grab():
     data = request.args.getlist('eins[]')
     # print(data)
-    banana = rd.mget(data)
-    # print(banana)
+    bulk_list = rd.mget(data)
+    # print(bulk)
     empty = []
-    for x in banana:
+    for x in bulk_list:
         b = slice(1, -1)
         empty.append(json.loads(x.decode('utf-8')[b]))
-    return {'banana' : empty }
+    return {'bulk_list' : empty }
 
 #fetch one charity for main graph
 
@@ -51,7 +51,7 @@ def bulk_grab():
 @bp.route('/single')
 @cross_origin(headers=["Content-Type", "Authorization"])
 def single():
-    charity = get_charity_by_id(112940331)
+    charity = get_charity_by_id(911914868)
     return charity
 
 
@@ -61,8 +61,8 @@ def single():
 @bp.route('/mini')
 @cross_origin(headers=["Content-Type", "Authorization"])
 def mini():
-    charity1 = json.loads(get_charity_by_id(113473757).decode('utf-8'))[0]
-    charity2 = json.loads(get_charity_by_id(112630071).decode('utf-8'))[0]
+    charity1 = json.loads(get_charity_by_id(751835298).decode('utf-8'))[0]
+    charity2 = json.loads(get_charity_by_id(530196605).decode('utf-8'))[0]
     charity3 = json.loads(get_charity_by_id(650755522).decode('utf-8'))[0]
     # charity4 = json.loads(get_charity_by_id(113211164).decode('utf-8'))[0]
     # print(charity1)
