@@ -26,7 +26,6 @@ def handle_auth_error(ex):
 @cross_origin(headers=["Content-Type", "Authorization"])
 def charities(charity_id):
     charity = json.loads(get_charity_by_id(charity_id).decode('utf-8'))[0]
-
     return charity
 
 #fetch user saved charities from redis
@@ -67,8 +66,6 @@ def mini():
     # charity4 = json.loads(get_charity_by_id(113211164).decode('utf-8'))[0]
     # print(charity1)
     charities = [charity1, charity2, charity3]
-    
-    
     return {'charities': charities}
 
 

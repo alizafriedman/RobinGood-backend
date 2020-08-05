@@ -30,6 +30,7 @@ def privateUser():
     return "private user endpoint"
 
 
+
 @bp.route('', methods=['POST'])
 @cross_origin(headers=["Content-Type", "Authorization"])
 @requires_auth
@@ -79,6 +80,7 @@ def add_single(user_id):
     return 'charity successfully added to your portfolio', 201
 
 
+
 @bp.route('/<int:user_id>')
 @cross_origin(headers=["Content-Type", "Authorization"])
 @requires_auth
@@ -109,9 +111,9 @@ def add_charity(user_id):
     userInfo = json.loads(req)
     user = User.query.filter_by(email=userInfo['email']).first()
     data = request.json
-    print(data)
+    # print(data)
     if user.charity:
-        print(user.charity)
+        # print(user.charity)
         new_list = [*user.charity, data['charity_id']]
         user.charity = new_list
         db.session.commit()

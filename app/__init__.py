@@ -48,7 +48,7 @@ def public():
 @requires_auth
 def private():
     token = request.headers.get('Authorization')
-    print(token)
+    # print(token)
     response = "Hello from a private endpoint! You need to be authenticated to see this."
     return jsonify(message=response)
 
