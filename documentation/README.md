@@ -18,10 +18,10 @@ Backend for app here: [RobinGood Backend](https://github.com/alizafriedman/Robin
 
 
 ## Screenshots
-* Search by term
+## Search by term
 ![search by term gif!](https://github.com/alizafriedman/RobinGood-backend/blob/master/documentation/images/captured%20(1).gif)
 
-* Search by EIN!
+## Search by EIN!
 ![search by ein gif](https://github.com/alizafriedman/RobinGood-backend/blob/master/documentation/images/captured%20(2).gif)
 
 
