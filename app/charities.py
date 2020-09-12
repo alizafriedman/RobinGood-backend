@@ -2,6 +2,7 @@ from .routes import rd
 import requests
 import json
 
+#check redis, return or pull from API and put in redis
 def get_charity_by_id(charity_id):
     charity = rd.get(charity_id)
     if charity:
@@ -12,10 +13,8 @@ def get_charity_by_id(charity_id):
         if req.status_code == requests.codes.ok and requ.status_code == requests.codes.ok:
             charityInfo = req.json()
             charityInfos = requ.json()
-            # print(charityInfos)
             info = charityInfo['data']
             info_w = charityInfos['data'][0]
-            # print(info_w)
             charity_id = info['ein']
             name = info['name']
             city = info['city']
@@ -27,7 +26,6 @@ def get_charity_by_id(charity_id):
             fundraising = info['grsincfndrsng'] or 0
             contributions = info['totcntrbgfts'] or 0
             url = info_w['website'] or info_w['url']
-            # website = info_w['website']
             donate = info_w['donationUrl']
 
             charity_data = {
@@ -55,6 +53,5 @@ def get_charity_by_id(charity_id):
             charity_string = json.dumps(charity_data)
             rd.set(charity_id, charity_string)
             result = rd.get(charity_id)
-            # print(test)
 
             return result

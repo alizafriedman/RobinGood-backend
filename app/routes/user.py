@@ -30,18 +30,17 @@ def privateUser():
     return "private user endpoint"
 
 
-
+#Auth0 check / add user to db
 @bp.route('', methods=['POST'])
 @cross_origin(headers=["Content-Type", "Authorization"])
 @requires_auth
 def updateUser():
     body = request.json
-    # checks if there there is user in db
     db_user = User.query.filter_by(email=body['email']).first()
-    if db_user:  # if user exists updates the user's name
+    if db_user: 
         db_user.nickname = body['nickname']
         return jsonify({'userId': db_user.id}), 201
-    else:  # no user exists create a new user
+    else:  
         new_user = User(email=body['email'],
                         nickname=body['nickname']
                         )
@@ -51,7 +50,7 @@ def updateUser():
         return 'user created', 201
     
 
-
+#find existing user
 @bp.route('/<int:user_id>')
 @requires_auth
 def get_user(user_id):
@@ -62,8 +61,7 @@ def get_user(user_id):
         return "person not found", 422
 
 
-#post - add charity
-
+#add charity to user
 @bp.route('/<int:user_id>', methods=['POST'])
 @cross_origin(headers=["Content-Type", "Authorization"])
 @requires_auth
@@ -77,10 +75,10 @@ def add_single(user_id):
     new_list = [data['charity_id']]
     user.charity = new_list
     db.session.commit()
-    return 'charity successfully added to your portfolio', 201
+    return 'charity successfully added to your account', 201
 
 
-
+#get user saved charities
 @bp.route('/<int:user_id>')
 @cross_origin(headers=["Content-Type", "Authorization"])
 @requires_auth
@@ -97,10 +95,7 @@ def find(user_id):
 
 
 
-#patch = add multiple charities to user - no post needed bec default value null?
-
-
-
+#patch = add multiple charities to user, or first single
 @bp.route('/<int:user_id>', methods=['PATCH'])
 @cross_origin(headers=["Content-Type", "Authorization"])
 @requires_auth
@@ -111,9 +106,7 @@ def add_charity(user_id):
     userInfo = json.loads(req)
     user = User.query.filter_by(email=userInfo['email']).first()
     data = request.json
-    # print(data)
     if user.charity:
-        # print(user.charity)
         new_list = [*user.charity, data['charity_id']]
         user.charity = new_list
         db.session.commit()
@@ -126,7 +119,6 @@ def add_charity(user_id):
 
 
 #delete a charity from saved
-
 @bp.route('/<int:user_id>', methods=['DELETE'])
 @cross_origin(headers=["Content-Type", "Authorization"])
 @requires_auth
@@ -137,16 +129,11 @@ def delete_charity(user_id):
     userInfo = json.loads(req)
     user = User.query.filter_by(email=userInfo['email']).first()
     data = request.json
-    # print(data)
     updated_list = [*user.charity]
-    # print(updated_list)
     char = data['charity_id']
-    # print(char)
     for x in updated_list:
         if int(x) == int(char):
             updated_list.remove(str(x))
             user.charity = updated_list
-            # print(user.charity)
             db.session.commit()
-    # print(updated_list)
     return 'delete was successful', 201
