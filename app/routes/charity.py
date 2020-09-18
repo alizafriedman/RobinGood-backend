@@ -20,7 +20,7 @@ def handle_auth_error(ex):
     return response
 
 
-#checks if ein exists in redis, returns if there if not adds info to redis, returns the info retrieved
+#checks if ein exists in redis, returns if there 
 @bp.route('/<int:charity_id>')
 @cross_origin(headers=["Content-Type", "Authorization"])
 def charities(charity_id):
