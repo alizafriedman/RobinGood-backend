@@ -9,7 +9,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(50), nullable=False, unique=True)
     nickname = db.Column(db.String(50), nullable=False)
-    charity = db.Column(ARRAY(db.String), nullable=True) #eins stored in array 
+    charity = db.Column(ARRAY(db.String), nullable=True, unique=False) #eins stored in array 
 
     def to_dict(self):
         return {

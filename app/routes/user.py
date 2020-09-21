@@ -107,11 +107,13 @@ def add_charity(user_id):
     user = User.query.filter_by(email=userInfo['email']).first()
     data = request.json
     if user.charity:
+        print(data)
         new_list = [*user.charity, data['charity_id']]
         user.charity = new_list
         db.session.commit()
         return 'charity successfully added to your portfolio', 201
     else:
+        print(data)
         new_list = [data['charity_id']]
         user.charity = new_list
         db.session.commit()

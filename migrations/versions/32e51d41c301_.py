@@ -24,7 +24,6 @@ def upgrade():
     sa.Column('nickname', sa.String(length=50), nullable=False),
     sa.Column('charity', postgresql.ARRAY(sa.String()), server_default='{}'),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('charity'),
     sa.UniqueConstraint('email')
     )
     # ### end Alembic commands ###
