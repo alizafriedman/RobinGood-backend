@@ -1,1 +1,2 @@
-web: gunicorn --bind 0.0.0.0:$PORT flaskapp:app
+web: flask db upgrade
+web: gunicorn server:app
