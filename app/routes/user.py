@@ -16,9 +16,9 @@ def handle_auth_error(ex):
     return response
 
 
-@bp.route('')
-def user():
-    return "hellooooooooo"
+# @bp.route('')
+# def user():
+#     return "hellooooooooo"
 
 
         
@@ -37,6 +37,8 @@ def privateUser():
 def updateUser():
     body = request.json
     db_user = User.query.filter_by(email=body['email']).first()
+    # print(db_user)
+    # print('apple')
     if db_user: 
         db_user.nickname = body['nickname']
         return jsonify({'userId': db_user.id}), 201
@@ -46,12 +48,12 @@ def updateUser():
                         )
         db.session.add(new_user)
         db.session.commit()
-
-        return 'user created', 201
+        return {'userId':new_user.id}
     
 
 #find existing user
 @bp.route('/<int:user_id>')
+@cross_origin(headers=["Content-Type", "Authorization"])
 @requires_auth
 def get_user(user_id):
     person = User.query.filter_by(id=user_id).first()

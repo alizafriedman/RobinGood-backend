@@ -18,8 +18,8 @@ def handle_auth_error(ex):
 
 
 @bp.route('/private')
-# @cross_origin(headers=["Content-Type", "Authorization"])
-# @requires_auth
+@cross_origin(headers=["Content-Type", "Authorization"])
+@requires_auth
 def privateUser():
     return "private user endpoint"
 
